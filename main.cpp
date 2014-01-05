@@ -6,13 +6,14 @@
  */
 
 #include <iostream>
+#include "parser.h"
 
-using std::cout;
-using std::endl;
+using namespace std;
 
 int main()
 {
 
     cout << "Program Beginning" << endl;
+    init_parser();
     
 }

@@ -5,15 +5,24 @@
  * @author Sai Koppula
  */
 
-#include <iostream>
-#include "parser.h"
 
+#include "parser.h"
+#include <iostream>
+#include <fstream>
 using namespace std;
 
 int main()
 {
 
     cout << "Program Beginning" << endl;
+    ofstream test;
+    test.open("test.txt");
     init_parser();
+    pp_comments();
+    create_symbol_table();
+    create_object_file();
+    test << "Hello World" << endl;
+    test.close();
+    return 0;
     
 }

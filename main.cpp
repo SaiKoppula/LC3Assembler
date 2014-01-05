@@ -11,12 +11,12 @@
 #include <fstream>
 using namespace std;
 
-int main()
+int main(int argc, char* argv[])
 {
 
     cout << "Program Beginning" << endl;
     ofstream test;
-    test.open("test.txt");
+    test.open(argv[1]);
     init_parser();
     pp_comments();
     create_symbol_table();

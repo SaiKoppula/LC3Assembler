@@ -5,7 +5,7 @@
 #  Adapted from UIUC CS225 Spring 2013 MP7 Makefile
 
 EXES = assemble
-OBJS = main.o parser.o 
+OBJS = main.o parser.o lib.o
 
 CXX = g++
 WARNINGS = -Wchar-subscripts -Wparentheses -Wreturn-type -Wmissing-braces -Wundef -Wshadow
@@ -24,8 +24,12 @@ tidy:
 $(EXES): $(OBJS)
 	$(CXX) -o $@ $^
 
-main.o: main.cpp parser.o
+main.o: main.cpp parser.o lib.o
 	$(CXX) $(CXX_OPTS) $<
 
 parser.o: parser.cpp parser.h
 	$(CXX) $(CXX_OPTS) $<
+
+lib.o: lib.cpp lib.h
+	$(CXX) $(CXX_OPTS) $<
+

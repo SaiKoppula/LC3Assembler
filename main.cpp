@@ -7,23 +7,25 @@
 
 
 #include "parser.h"
+#include "lib.h"
 #include <iostream>
 #include <fstream>
+
 using namespace std;
 
 int main(int argc, char* argv[])
 {
 
-    cout << "Program Beginning" << endl;
+    coutc("blue","Program Beginning");
     if (argc < 2)
     {
-        cout << "No input file" << endl;
-        cout << "Terminating Program" << endl;
+        coutc("red", "No input file");
+        coutc("red", "Terminating Program");
         return 0;
     }
     if (init_parser(argv[1]) == -1)
     {
-        cout << "Terminating Program" << endl;
+        coutc("red", "Terminating Program");
         return 0;
     }
     pp_comments();

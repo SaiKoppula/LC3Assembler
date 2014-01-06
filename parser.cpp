@@ -6,12 +6,13 @@
  */
 
 #include "parser.h"
+#include "lib.h"
 #include <iostream>
 #include <fstream>
 #include <string>
 using namespace std;
 
-//Local Variables
+//Global Variables
 map<string, int> symbol_table;
 string sourcefile;
 string pp_sourcefile;
@@ -29,17 +30,17 @@ int init_parser(string src)
     int length = src.length();
     if (length < 4 || src[length -4] != '.' || src[length -3] != 'a' || src[length -2] != 's' || src[length -1] != 'm')
     {
-        cout << "Not a valid .asm file" << endl;
+        coutc("red","Not a valid .asm file");
         return -1;
     }
     
     sourcefile = src;
     pp_sourcefile = "temp.asm";
     
-    cout << "Source File: " << sourcefile << endl;
-    cout << "Preprocessed Storage: " << pp_sourcefile << endl;
+    coutc("green","Source File: "+sourcefile);
+    coutc("green", "Preprocessed Storage: "+pp_sourcefile);
     
-    cout << "Parser Initialized" << endl;
+    coutc("blue","Parser Initialized");
     return 0;
 }
 
@@ -55,7 +56,7 @@ int init_parser(string src)
 void pp_comments()
 {
     
-    cout << "Parser PPing Comments" << endl;
+    coutc("blue","Parser PPing Comments");
    
     ifstream input;
     ofstream output;
@@ -92,7 +93,7 @@ void pp_comments()
  */
 void create_symbol_table()
 {
-    cout << "Generating Symbol Table" << endl;
+    coutc("blue","Generating Symbol Table");
 }
 
 /*
@@ -105,7 +106,7 @@ void create_symbol_table()
  */
 void create_object_file()
 {
-    cout << "Creating Machine Code File" << endl;
+    coutc("blue","Creating Machine Code File");
 }
 
 

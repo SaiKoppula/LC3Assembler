@@ -10,15 +10,13 @@
 #define _PARSER_H
 
 #include <map>
+#include <string>
 //#include <iostream>
 //#include <fstream>
 using namespace std;
 
-    //Local Variables
-    extern map<string, int> symbol_table;
-
     // Initialize Parser
-    void init_parser();
+    int init_parser(string src);
 
     // Preprocess Comments
     void pp_comments();

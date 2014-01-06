@@ -8,7 +8,13 @@
 #include "parser.h"
 #include <iostream>
 #include <fstream>
+#include <string>
 using namespace std;
+
+//Local Variables
+map<string, int> symbol_table;
+string sourcefile;
+string pp_sourcefile;
 
 /*
  * init_parser
@@ -18,11 +24,23 @@ using namespace std;
  *   RETURN VALUE: none
  *   SIDE EFFECTS: none
  */
-void init_parser()
+int init_parser(string src)
 {
- 
-    cout << "Parser Initialized" << endl;
+    int length = src.length();
+    if (length < 4 || src[length -4] != '.' || src[length -3] != 'a' || src[length -2] != 's' || src[length -1] != 'm')
+    {
+        cout << "Not a valid .asm file" << endl;
+        return -1;
+    }
     
+    sourcefile = src;
+    pp_sourcefile = "temp.asm";
+    
+    cout << "Source File: " << sourcefile << endl;
+    cout << "Preprocessed Storage: " << pp_sourcefile << endl;
+    
+    cout << "Parser Initialized" << endl;
+    return 0;
 }
 
 /*
@@ -36,7 +54,32 @@ void init_parser()
  */
 void pp_comments()
 {
+    
     cout << "Parser PPing Comments" << endl;
+   
+    ifstream input;
+    ofstream output;
+    string buf;
+    input.open(sourcefile);
+    output.open(pp_sourcefile);
+    
+    if(input.is_open())
+    {
+        while(getline(input,buf))
+        {
+            for(int i = 0; i < buf.length(); i++)
+            {
+                //cout << "In LOOP: " << buf << endl;
+                if(buf[i] == ';') break;
+                output << buf[i];
+            }
+            if (buf.length()>0 &&buf[0] != ';' && buf[0] != '\n') output << endl;
+        }
+        
+    }
+    input.close();
+    output.close();
+    
 }
 
 /*

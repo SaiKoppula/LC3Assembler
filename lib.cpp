@@ -23,16 +23,31 @@ using namespace std;
 
 void coutc(string color, string text)
 {
-    if (color.compare("red") == 0)
+    if (strcmp(color, "red") == 0)
         cout << REDTEXT;
-    else if (color.compare("yellow") == 0)
+    else if (strcmp(color, "yellow") == 0)
         cout << YELTEXT;
-    else if (color.compare("blue") == 0)
+    else if (strcmp(color, "blue") == 0)
         cout << BLUTEXT;
-    else if (color.compare("green") == 0)
+    else if (strcmp(color, "green") == 0)
         cout << GRETEXT;
     else cout << DEFTEXT;
     
     cout << text << DEFTEXT << endl;
     
+}
+
+//String to LowerCase
+string toLower(string input)
+{
+	for(int i = 0; i < input.length(); i++)
+		input[i] = tolower(input[i]);
+	return input;
+}
+
+//Case insensitive string compare
+int strcmp(string input, string key)
+{
+	return toLower(key).compare(toLower(input));
+	
 }

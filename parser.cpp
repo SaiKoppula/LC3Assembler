@@ -10,12 +10,16 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 using namespace std;
 
 //Global Variables
 map<string, int> symbol_table;
 string sourcefile;
 string pp_sourcefile;
+string st_file;
+vector<string> OPCODES;
+int start_addr;
 
 /*
  * init_parser
@@ -36,10 +40,29 @@ int init_parser(string src)
     
     sourcefile = src;
     pp_sourcefile = "temp.asm";
+	st_file = "temp.sym";
     
     coutc("green","Source File: "+sourcefile);
     coutc("green", "Preprocessed Storage: "+pp_sourcefile);
     
+	OPCODES.push_back("add");
+	OPCODES.push_back("and");
+	OPCODES.push_back("br");
+	OPCODES.push_back("jmp");
+	OPCODES.push_back("jsr");
+	OPCODES.push_back("jsrr");
+	OPCODES.push_back("ld");
+	OPCODES.push_back("ldi");
+	OPCODES.push_back("ldr");
+	OPCODES.push_back("lea");
+	OPCODES.push_back("not");
+	OPCODES.push_back("ret");
+	OPCODES.push_back("rti");
+	OPCODES.push_back("st");
+	OPCODES.push_back("sti");
+	OPCODES.push_back("str");
+	OPCODES.push_back("trap");
+	
     coutc("blue","Parser Initialized");
     return 0;
 }
@@ -94,6 +117,39 @@ void pp_comments()
 void create_symbol_table()
 {
     coutc("blue","Generating Symbol Table");
+	
+	ifstream input;
+    ofstream output;
+    string buf;
+	string temp;
+    input.open(pp_sourcefile);
+    output.open(st_file);
+    
+	if(getline(input,buf))
+	{
+		temp.push_back(buf[0]);
+		temp.push_back(buf[1]);
+		temp.push_back(buf[2]);
+		temp.push_back(buf[3]);
+		if(strcmp()
+	}
+    if(input.is_open())
+    {
+        while(getline(input,buf))
+        {
+            for(int i = 0; i < buf.length(); i++)
+            {
+                //cout << "In LOOP: " << buf << endl;
+                if(buf[i] == ';') break;
+                output << buf[i];
+            }
+            if (buf.length()>0 &&buf[0] != ';' && buf[0] != '\n') output << endl;
+        }
+        
+    }
+    input.close();
+    output.close();
+	
 }
 
 /*

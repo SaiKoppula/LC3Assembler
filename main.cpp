@@ -16,6 +16,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 
+	
     coutc("blue","Program Beginning");
     if (argc < 2)
     {
@@ -32,7 +33,7 @@ int main(int argc, char* argv[])
     create_symbol_table();
     create_object_file();
     //test << "Hello World" << endl;
-   
+	
     return 0;
     
 }

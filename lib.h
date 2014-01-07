@@ -13,8 +13,12 @@
 using namespace std;
 
 //Custom COUT Function
-
 void coutc(string color, string text);
 
+//String to LowerCase
+string toLower(string input);
+
+//Case insensitive string compare
+int strcmp(string input, string key);
 
 #endif

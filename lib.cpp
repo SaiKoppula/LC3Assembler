@@ -17,7 +17,7 @@ using namespace std;
 #define DEFTEXT "\033[0m"
 #define YELTEXT "\033[1;33m"
 #define BLUTEXT "\033[1;34m"
-#define GRETEXT "\033[1;31m"
+#define GRETEXT "\033[1;32m"
 
 //Global Variables
 

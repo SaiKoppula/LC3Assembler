@@ -61,20 +61,22 @@ vector<string> getWords(string input)
 	{
 		if(input[i] == ' ')
 		{
-			words.push_back(word);
+			if(word.length() >0) words.push_back(word);
 			word = "";
 		}
 		else word.push_back(input[i]);
 	}
-	if(word != " ") words.push_back(word);
+	if(word.length()>0) words.push_back(word);
 	return words;
 }
 
 //Print Vector Indices and Values
 void print(vector<string> words)
 {
-	cout << endl;
 	
+	if (words.size() == 0) return;
+	
+	cout << endl;
 	coutc("Blue", "++++++++++++Vector Values++++++++++++");
 	
 	coutc("Green","\tIndex\t\tValue\t");

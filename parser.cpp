@@ -122,28 +122,22 @@ void create_symbol_table()
     ofstream output;
     string buf;
 	string temp;
+	vector<string> words;
     input.open(pp_sourcefile);
     output.open(st_file);
     
 	if(getline(input,buf))
 	{
-		temp.push_back(buf[0]);
-		temp.push_back(buf[1]);
-		temp.push_back(buf[2]);
-		temp.push_back(buf[3]);
+		words = getWords(buf);
+		print(words);
 		
 	}
     if(input.is_open())
     {
         while(getline(input,buf))
         {
-            for(int i = 0; i < buf.length(); i++)
-            {
-                //cout << "In LOOP: " << buf << endl;
-                if(buf[i] == ';') break;
-                output << buf[i];
-            }
-            if (buf.length()>0 &&buf[0] != ';' && buf[0] != '\n') output << endl;
+            words = getWords(buf);
+			print(words);
         }
         
     }

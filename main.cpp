@@ -13,7 +13,7 @@
 
 using namespace std;
 
-#define TESTFUNC 1
+#define TESTFUNC 0
 
 #if TESTFUNC == 0
 int main(int argc, char* argv[])

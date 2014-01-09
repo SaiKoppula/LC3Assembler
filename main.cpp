@@ -33,7 +33,12 @@ int main(int argc, char* argv[])
         return 0;
     }
     pp_comments();
-    create_symbol_table();
+	if (create_symbol_table() == -1)
+	{
+		coutc("red", "Terminating Program");
+        return 0;
+	}
+    
     create_object_file();
     //test << "Hello World" << endl;
 	

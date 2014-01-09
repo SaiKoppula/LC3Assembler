@@ -59,7 +59,7 @@ vector<string> getWords(string input)
 	string word = "";
 	for(int i = 0; i<input.length(); i++)
 	{
-		if(input[i] == ' ')
+		if(input[i] == ' ' || input[i] == '\t')
 		{
 			if(word.length() >0) words.push_back(word);
 			word = "";

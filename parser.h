@@ -22,9 +22,12 @@ using namespace std;
     void pp_comments();
 
     // First Pass
-    void create_symbol_table();
+    int create_symbol_table();
 
     // Second Pass
     void create_object_file();
+
+	//Check if string is opcode
+	int isOpCode(string test);
 
 #endif

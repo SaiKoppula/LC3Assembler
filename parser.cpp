@@ -9,6 +9,7 @@
 #include "lib.h"
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <vector>
 using namespace std;
@@ -62,6 +63,20 @@ int init_parser(string src)
 	OPCODES.push_back("sti");
 	OPCODES.push_back("str");
 	OPCODES.push_back("trap");
+	OPCODES.push_back(".end");
+	OPCODES.push_back("halt");
+	OPCODES.push_back("puts");
+	
+	OPCODES.push_back("brn");
+	OPCODES.push_back("brnz");
+	OPCODES.push_back("brnp");
+	OPCODES.push_back("brnzp");
+	
+	OPCODES.push_back("brz");
+	OPCODES.push_back("brzp");
+	OPCODES.push_back("brp");
+	
+	
 	
     coutc("blue","Parser Initialized");
     return 0;
@@ -114,7 +129,7 @@ void pp_comments()
  *   RETURN VALUE: none
  *   SIDE EFFECTS: Populates hashmap symbol_table with data
  */
-void create_symbol_table()
+int create_symbol_table()
 {
     coutc("blue","Generating Symbol Table");
 	
@@ -129,20 +144,67 @@ void create_symbol_table()
 	if(getline(input,buf))
 	{
 		words = getWords(buf);
-		print(words);
+		if (strcmp(words[0], ".orig") != 0)
+		{
+			coutc("red", ".ORIG operative does not exist");
+			return -1;
+		}
+		else
+		{
+			if(words[1].length() != 5) //CRITICAL: Add check for "x"
+			{
+				coutc("red", "Invalid starting address");
+				return -1;
+			}
+			words[1].erase(0,1);
+			stringstream ss;
+			ss << hex << words[1];
+			ss >> start_addr;
+			cout << "Start Address " << hex << start_addr << endl;
+		}
+		//print(words);
 		
 	}
+	int curr_addr = start_addr;
     if(input.is_open())
     {
         while(getline(input,buf))
         {
             words = getWords(buf);
-			print(words);
+			if(isOpCode(words[0]) != 0)
+			{
+				cout << curr_addr << endl;
+				symbol_table[words[0]] = curr_addr;
+				if(words.size() == 1) curr_addr--;
+				else if(strcmp(".blkw", words[1]) == 0) curr_addr--;
+			}
+			if(words.size()>0 )
+			{
+				
+				curr_addr++;
+			}
+			
+			//print(words);
         }
         
     }
+	
     input.close();
     output.close();
+	
+	coutc("Blue", "++++++++++++Vector Values++++++++++++");
+	
+	coutc("Green","\tIndex\t\tValue\t");
+	
+	string text;
+	//std::map<string,int>::iterator it;
+
+	// show content:
+	for (std::map<string,int>::iterator it=symbol_table.begin(); it!=symbol_table.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
+	coutc("Blue", "++++++++++++End of Table+++++++++++++");
+	
+	return 0;
 	
 }
 
@@ -157,6 +219,22 @@ void create_symbol_table()
 void create_object_file()
 {
     coutc("blue","Creating Machine Code File");
+}
+
+
+/*
+ * isOpCode
+ *   DESCRIPTION: Creates machine code file
+ *   INPUTS: file - file descriptor of source code
+ *   OUTPUTS: none
+ *   RETURN VALUE: 0 if Opcode, else -1
+ *   SIDE EFFECTS: Saves machine code in working directory
+ */
+int isOpCode(string test)
+{
+	for(int i = 0; i < OPCODES.size(); i++)
+		if(strcmp(OPCODES[i], test) == 0) return 0;
+	return -1;
 }
 
 

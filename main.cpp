@@ -13,6 +13,9 @@
 
 using namespace std;
 
+#define TESTFUNC 1
+
+#if TESTFUNC == 0
 int main(int argc, char* argv[])
 {
 
@@ -37,3 +40,18 @@ int main(int argc, char* argv[])
     return 0;
     
 }
+#endif
+
+#if TESTFUNC == 1
+int main(int argc, char* argv[])
+{
+	
+    cout << "Hello World" << endl;
+	vector<string> words;
+	string test = "Hi my name is Sai";
+	words = getWords(test);
+	print(words);
+    return 0;
+    
+}
+#endif

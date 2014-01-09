@@ -131,7 +131,7 @@ void create_symbol_table()
 		temp.push_back(buf[1]);
 		temp.push_back(buf[2]);
 		temp.push_back(buf[3]);
-		if(strcmp()
+		
 	}
     if(input.is_open())
     {

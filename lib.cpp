@@ -51,3 +51,49 @@ int strcmp(string input, string key)
 	return toLower(key).compare(toLower(input));
 	
 }
+
+//Turn input string into vector of words
+vector<string> getWords(string input)
+{
+	vector<string> words;
+	string word = "";
+	for(int i = 0; i<input.length(); i++)
+	{
+		if(input[i] == ' ')
+		{
+			words.push_back(word);
+			word = "";
+		}
+		else word.push_back(input[i]);
+	}
+	if(word != " ") words.push_back(word);
+	return words;
+}
+
+//Print Vector Indices and Values
+void print(vector<string> words)
+{
+	cout << endl;
+	
+	coutc("Blue", "++++++++++++Vector Values++++++++++++");
+	
+	coutc("Green","\tIndex\t\tValue\t");
+	
+	string text;
+	for(int i = 0; i< words.size(); i++)
+	{
+		text = "";
+		text+="\t";
+		text+= to_string(i);
+		text+="\t\t";
+		text+=words[i];
+		coutc("Green", text);
+	}
+	coutc("Blue", "++++++++++++End of Table+++++++++++++");
+
+	
+}
+
+
+
+

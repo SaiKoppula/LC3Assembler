@@ -1,5 +1,5 @@
 /**
- * @file lib.c
+ * @file lib.cpp
  * Support File for Custom Libraries
  * @date January 2014
  * @author Sai Koppula
@@ -40,60 +40,59 @@ void coutc(string color, string text)
 //String to LowerCase
 string toLower(string input)
 {
-	for(int i = 0; i < input.length(); i++)
-		input[i] = tolower(input[i]);
-	return input;
+    for(int i = 0; i < input.length(); i++)
+	input[i] = tolower(input[i]);
+    return input;
 }
 
 //Case insensitive string compare
 int strcmp(string input, string key)
 {
-	return toLower(key).compare(toLower(input));
+    return toLower(key).compare(toLower(input));
 	
 }
 
 //Turn input string into vector of words
 vector<string> getWords(string input)
 {
-	vector<string> words;
-	string word = "";
-	for(int i = 0; i<input.length(); i++)
+    vector<string> words;
+    string word = "";
+    for(int i = 0; i<input.length(); i++)
+    {
+	if(input[i] == ' ' || input[i] == '\t')
 	{
-		if(input[i] == ' ' || input[i] == '\t')
-		{
-			if(word.length() >0) words.push_back(word);
-			word = "";
-		}
-		else word.push_back(input[i]);
+	    if(word.length() >0) words.push_back(word);
+		word = "";
 	}
-	if(word.length()>0) words.push_back(word);
-	return words;
+    	else word.push_back(input[i]);
+    }
+    if(word.length()>0) words.push_back(word);
+    
+    return words;
 }
 
 //Print Vector Indices and Values
 void print(vector<string> words)
 {
 	
-	if (words.size() == 0) return;
+    //if (words.size() == 0) return;
 	
-	cout << endl;
-	coutc("Blue", "++++++++++++Vector Values++++++++++++");
+    cout << endl;
+    coutc("Blue", "++++++++++++Vector Values++++++++++++");
 	
-	coutc("Green","\tIndex\t\tValue\t");
+    coutc("Green","\tIndex\t\tValue\t");
 	
-	string text;
-	for(int i = 0; i< words.size(); i++)
-	{
-		text = "";
-		text+="\t";
-		text+= to_string(i);
-		text+="\t\t";
-		text+=words[i];
-		coutc("Green", text);
-	}
-	coutc("Blue", "++++++++++++End of Table+++++++++++++");
-
-	
+    string text;
+    for(int i = 0; i< words.size(); i++)
+    {
+	text = "";
+	text+="\t";
+	text+= to_string(i);
+	text+="\t\t";
+	text+=words[i];
+	coutc("Green", text);
+    }
+    coutc("Blue", "++++++++++++End of Table+++++++++++++");	
 }
 
 

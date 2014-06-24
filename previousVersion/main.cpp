@@ -33,11 +33,11 @@ int main(int argc, char* argv[])
         return 0;
     }
     pp_comments();
-	if (create_symbol_table() == -1)
-	{
-		coutc("red", "Terminating Program");
+    if (create_symbol_table() == -1)
+    {
+	coutc("red", "Terminating Program");
         return 0;
-	}
+    }
     
     create_object_file();
     //test << "Hello World" << endl;
@@ -52,10 +52,11 @@ int main(int argc, char* argv[])
 {
 	
     cout << "Hello World" << endl;
-	vector<string> words;
-	string test = "Hi my name is Sai";
-	words = getWords(test);
-	print(words);
+    vector<string> words;
+    string test = "Hi my name is Sai";
+    words = getWords(test);
+    print(words);
+    
     return 0;
     
 }

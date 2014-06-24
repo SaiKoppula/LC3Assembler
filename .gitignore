@@ -1,0 +1,15 @@
+#Test Code Files and produced results
+*.asm
+
+#EXES
+chat
+communicator
+kvstore
+
+#Result Files
+*.o
+*.sym
+
+#Other
+*.swp
+*.pdf

@@ -41,40 +41,40 @@ int init_parser(string src)
     
     sourcefile = src;
     pp_sourcefile = "temp.asm";
-	st_file = "temp.sym";
+    st_file = "temp.sym";
     
     coutc("green","Source File: "+sourcefile);
     coutc("green", "Preprocessed Storage: "+pp_sourcefile);
     
-	OPCODES.push_back("add");
-	OPCODES.push_back("and");
-	OPCODES.push_back("br");
-	OPCODES.push_back("jmp");
-	OPCODES.push_back("jsr");
-	OPCODES.push_back("jsrr");
-	OPCODES.push_back("ld");
-	OPCODES.push_back("ldi");
-	OPCODES.push_back("ldr");
-	OPCODES.push_back("lea");
-	OPCODES.push_back("not");
-	OPCODES.push_back("ret");
-	OPCODES.push_back("rti");
-	OPCODES.push_back("st");
-	OPCODES.push_back("sti");
-	OPCODES.push_back("str");
-	OPCODES.push_back("trap");
-	OPCODES.push_back(".end");
-	OPCODES.push_back("halt");
-	OPCODES.push_back("puts");
+    OPCODES.push_back("add");
+    OPCODES.push_back("and");
+    OPCODES.push_back("br");
+    OPCODES.push_back("jmp");
+    OPCODES.push_back("jsr");
+    OPCODES.push_back("jsrr");
+    OPCODES.push_back("ld");
+    OPCODES.push_back("ldi");
+    OPCODES.push_back("ldr");
+    OPCODES.push_back("lea");
+    OPCODES.push_back("not");
+    OPCODES.push_back("ret");
+    OPCODES.push_back("rti");
+    OPCODES.push_back("st");
+    OPCODES.push_back("sti");
+    OPCODES.push_back("str");
+    OPCODES.push_back("trap");
+    OPCODES.push_back(".end");
+    OPCODES.push_back("halt");
+    OPCODES.push_back("puts");
 	
-	OPCODES.push_back("brn");
-	OPCODES.push_back("brnz");
-	OPCODES.push_back("brnp");
-	OPCODES.push_back("brnzp");
+    OPCODES.push_back("brn");
+    OPCODES.push_back("brnz");
+    OPCODES.push_back("brnp");
+    OPCODES.push_back("brnzp");
 	
-	OPCODES.push_back("brz");
-	OPCODES.push_back("brzp");
-	OPCODES.push_back("brp");
+    OPCODES.push_back("brz");
+    OPCODES.push_back("brzp");
+    OPCODES.push_back("brp");
 	
 	
 	
@@ -118,7 +118,6 @@ void pp_comments()
     }
     input.close();
     output.close();
-    
 }
 
 /*
@@ -133,78 +132,69 @@ int create_symbol_table()
 {
     coutc("blue","Generating Symbol Table");
 	
-	ifstream input;
+    ifstream input;
     ofstream output;
     string buf;
-	string temp;
-	vector<string> words;
+    string temp;
+    vector<string> words;
     input.open(pp_sourcefile);
     output.open(st_file);
     
-	if(getline(input,buf))
+    if(getline(input,buf))
+    {
+	words = getWords(buf);
+	if (strcmp(words[0], ".orig") != 0)
 	{
-		words = getWords(buf);
-		if (strcmp(words[0], ".orig") != 0)
-		{
-			coutc("red", ".ORIG operative does not exist");
-			return -1;
-		}
-		else
-		{
-			if(words[1].length() != 5) //CRITICAL: Add check for "x"
-			{
-				coutc("red", "Invalid starting address");
-				return -1;
-			}
-			words[1].erase(0,1);
-			stringstream ss;
-			ss << hex << words[1];
-			ss >> start_addr;
-			cout << "Start Address " << hex << start_addr << endl;
-		}
-		//print(words);
-		
+	    coutc("red", ".ORIG operative does not exist");
+    	    return -1;
 	}
-	int curr_addr = start_addr;
+	else
+	{
+    	    if(words[1].length() != 5) //CRITICAL: Add check for "x"
+	    {
+		coutc("red", "Invalid starting address");
+		return -1;
+	    }
+		words[1].erase(0,1);
+		stringstream ss;
+		ss << hex << words[1];
+		ss >> start_addr;
+		cout << "Start Address " << hex << start_addr << endl;
+	}
+		//print(words);	
+    }
+    int curr_addr = start_addr;
     if(input.is_open())
     {
         while(getline(input,buf))
         {
             words = getWords(buf);
-			if(isOpCode(words[0]) != 0)
-			{
-				cout << curr_addr << endl;
-				symbol_table[words[0]] = curr_addr;
-				if(words.size() == 1) curr_addr--;
-				else if(strcmp(".blkw", words[1]) == 0) curr_addr--;
-			}
-			if(words.size()>0 )
-			{
-				
-				curr_addr++;
-			}
-			
-			//print(words);
-        }
-        
+	    if(isOpCode(words[0]) != 0)
+	    {
+		cout << curr_addr << endl;
+		symbol_table[words[0]] = curr_addr;
+		if(words.size() == 1) curr_addr--;
+		else if(strcmp(".blkw", words[1]) == 0) curr_addr--;
+	    }
+	    if(words.size()>0 )
+	    {	
+		curr_addr++;
+	    }		
+	    print(words);
+        }        
     }
+	
+    output << hex << "++++++++++++Symbol Table++++++++++++" << endl;
+	
+    output << "\tIndex\t\tValue\t" << endl;
+
+    for (std::map<string,int>::iterator it=symbol_table.begin(); it!=symbol_table.end(); ++it)
+	output << "\t" << it->first << "\t => \t0x" << it->second << '\n';
+    output << "++++++++++++End of Table+++++++++++++" << endl;
 	
     input.close();
     output.close();
-	
-	coutc("Blue", "++++++++++++Vector Values++++++++++++");
-	
-	coutc("Green","\tIndex\t\tValue\t");
-	
-	string text;
-	//std::map<string,int>::iterator it;
-
-	// show content:
-	for (std::map<string,int>::iterator it=symbol_table.begin(); it!=symbol_table.end(); ++it)
-		std::cout << it->first << " => " << it->second << '\n';
-	coutc("Blue", "++++++++++++End of Table+++++++++++++");
-	
-	return 0;
+    return 0;
 	
 }
 
@@ -232,9 +222,9 @@ void create_object_file()
  */
 int isOpCode(string test)
 {
-	for(int i = 0; i < OPCODES.size(); i++)
-		if(strcmp(OPCODES[i], test) == 0) return 0;
-	return -1;
+    for(int i = 0; i < OPCODES.size(); i++)
+	if(strcmp(OPCODES[i], test) == 0) return 0;
+    return -1;
 }
 
 

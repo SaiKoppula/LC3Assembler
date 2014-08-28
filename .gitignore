@@ -13,3 +13,4 @@ kvstore
 #Other
 *.swp
 *.pdf
+*.pyc
